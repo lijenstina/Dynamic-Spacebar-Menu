@@ -1533,21 +1533,6 @@ class VIEW3D_MT_Hide_Masks(Menu):
         props.action = 'HIDE'
 
 
-# Dyntopo Menu (Thanks to marvin.k.breuer) #
-class VIEW3D_MT_Sculpt_Dyntopo(Menu):
-    bl_label = "Dyntopo Set"
-    bl_idname = "view3d.set_brush_dyntopo"
-
-    def draw(self, context):
-        layout = self.layout
-        settings = context.tool_settings
-
-        layout.prop(settings.sculpt, "detail_refine_method", text="")
-        layout.prop(settings.sculpt, "detail_type_method", text="")
-        UseSeparator(self, context)
-        layout.prop(settings.sculpt, "use_smooth_shading", "Smooth")
-
-
 # Sculpt Specials Menu (Thanks to marvin.k.breuer) #
 class VIEW3D_MT_Sculpt_Specials(Menu):
     bl_label = "Sculpt Specials"
@@ -1573,7 +1558,11 @@ class VIEW3D_MT_Sculpt_Specials(Menu):
             if (settings.sculpt.detail_type_method == 'CONSTANT'):
                 layout.operator("sculpt.detail_flood_fill")
 
-            layout.menu("view3d.set_brush_dyntopo")
+            UseSeparator(self, context)
+            layout.prop(settings.sculpt, "detail_refine_method", text="")
+            layout.prop(settings.sculpt, "detail_type_method", text="")
+            UseSeparator(self, context)
+            layout.prop(settings.sculpt, "use_smooth_shading", "Smooth")
 
         else:
             layout.operator("sculpt.dynamic_topology_toggle", icon='SCULPT_DYNTOPO', text="Enable Dyntopo")
@@ -2891,7 +2880,6 @@ classes = [
     VIEW3D_OT_Interactive_Mode_Text,
     SnapCursSelToCenter,
     VIEW3D_MT_Sculpt_Specials,
-    VIEW3D_MT_Sculpt_Dyntopo,
     VIEW3D_MT_Brush_Settings,
     VIEW3D_MT_Brush_Selection,
     VIEW3D_MT_Sculpts,
